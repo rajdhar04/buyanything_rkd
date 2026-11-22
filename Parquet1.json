@@ -1,0 +1,77 @@
+{
+    "name": "Parquet1",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "AzureDataLakeStorage1",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "Parquet",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobFSLocation",
+                "fileSystem": "bronze"
+            },
+            "compressionCodec": "snappy"
+        },
+        "schema": [
+            {
+                "name": "OrderID",
+                "type": "INT32"
+            },
+            {
+                "name": "OrderDate",
+                "type": "DATE"
+            },
+            {
+                "name": "CustomerID",
+                "type": "INT32"
+            },
+            {
+                "name": "CustomerName",
+                "type": "UTF8"
+            },
+            {
+                "name": "CustomerEmail",
+                "type": "UTF8"
+            },
+            {
+                "name": "Country",
+                "type": "UTF8"
+            },
+            {
+                "name": "ProductID",
+                "type": "INT32"
+            },
+            {
+                "name": "ProductCategory",
+                "type": "UTF8"
+            },
+            {
+                "name": "ProductName",
+                "type": "UTF8"
+            },
+            {
+                "name": "Quantity",
+                "type": "INT32"
+            },
+            {
+                "name": "UnitPrice",
+                "type": "DECIMAL",
+                "precision": 18,
+                "scale": 2
+            },
+            {
+                "name": "TotalPrice",
+                "type": "DECIMAL",
+                "precision": 18,
+                "scale": 2
+            },
+            {
+                "name": "SalesRegion",
+                "type": "UTF8"
+            }
+        ]
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}
