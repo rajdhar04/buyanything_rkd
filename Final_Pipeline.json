@@ -1,0 +1,195 @@
+{
+    "name": "Final_Pipeline",
+    "properties": {
+        "activities": [
+            {
+                "name": "Silver",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Workspace/Users/raj-dhar@outlook.com/cf/silver"
+                },
+                "linkedServiceName": {
+                    "referenceName": "AzureDatabricksConnect",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "GoldDimCustomer",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Silver",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Workspace/Users/raj-dhar@outlook.com/cf/GoldDimCustomer",
+                    "baseParameters": {
+                        "incremental flag": "1"
+                    }
+                },
+                "linkedServiceName": {
+                    "referenceName": "AzureDatabricksConnect",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "GoldDimDate",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Silver",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Workspace/Users/raj-dhar@outlook.com/cf/GoldDimDate",
+                    "baseParameters": {
+                        "incremental flag": "1"
+                    }
+                },
+                "linkedServiceName": {
+                    "referenceName": "AzureDatabricksConnect",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "GoldDimProduct",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Silver",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Workspace/Users/raj-dhar@outlook.com/cf/GoldDimProduct",
+                    "baseParameters": {
+                        "incremental flag": "1"
+                    }
+                },
+                "linkedServiceName": {
+                    "referenceName": "AzureDatabricksConnect",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "GoldDimSalesRegion",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Silver",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Workspace/Users/raj-dhar@outlook.com/cf/GoldDimSalesRegion",
+                    "baseParameters": {
+                        "incremental flag": "0"
+                    }
+                },
+                "linkedServiceName": {
+                    "referenceName": "AzureDatabricksConnect",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "FactSales",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "GoldDimCustomer",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "GoldDimDate",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "GoldDimProduct",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "GoldDimSalesRegion",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Workspace/Users/raj-dhar@outlook.com/FactSales"
+                },
+                "linkedServiceName": {
+                    "referenceName": "AzureDatabricksConnect",
+                    "type": "LinkedServiceReference"
+                }
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2026-11-21T13:40:34Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}
